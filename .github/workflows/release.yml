@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  build:
+  bump_version:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Latest Commit
@@ -23,3 +23,5 @@ jobs:
 
     - name: Print Version
       run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
+
+
