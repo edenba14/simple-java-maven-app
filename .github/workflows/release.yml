@@ -29,3 +29,6 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USER }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: push to dockerhub
+      run: docker push eden4536/simple-java-maven-app:${{steps.bump.outputs.version}}
