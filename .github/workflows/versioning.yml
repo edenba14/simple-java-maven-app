@@ -3,7 +3,7 @@ name: Increase Version
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   bump_version:
