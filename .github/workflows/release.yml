@@ -23,3 +23,9 @@ jobs:
 
     - name: build image
       run: docker build -t eden4536/simple-java-maven-app:${{steps.bump.outputs.version}} --build-arg="VERSION=${{steps.bump.outputs.version}}" .
+
+    - name: push to dockerub
+      run: |
+        docker login  -u eden4536 -p ${{ secrets.DOCKERHUB }}
+        docker push eden4536/simple-java-maven-app:${{steps.bump.outputs.version}}
+
