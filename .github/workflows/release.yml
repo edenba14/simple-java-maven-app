@@ -23,11 +23,3 @@ jobs:
 
     - name: build image
       run: docker build -t eden4536/simple-java-maven-app:${{steps.bump.outputs.version}} --build-arg="VERSION=${{steps.bump.outputs.version}}" .
-
-        #- name: push image
-        #run: "docker build eden4536/simple-java-maven-app:${{steps.bump.outputs.version}}"
-
-
-  
-
-
