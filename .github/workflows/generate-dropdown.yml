@@ -32,4 +32,4 @@ jobs:
         echo "MICROSERVICES=$MICROSERVICES" >> $GITHUB_ENV
 
     - name: Output the list
-      run: echo "Microservices: ${{ env.MICROSERVICES }}"
+      run: echo "Microservices:"
