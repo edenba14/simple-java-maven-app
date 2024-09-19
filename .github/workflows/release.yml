@@ -1,44 +1,44 @@
-name: Version Bump
+# name: Version Bump
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout Latest Commit
-      uses: actions/checkout@v2
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#     - name: Checkout Latest Commit
+#       uses: actions/checkout@v2
 
-    - name: Bump Version
-      id: bump
-      uses: nnichols/maven-version-bump-action@v3
-      with:
-        github-token: ${{ secrets.CONNECT_TOKEN }}
+#     - name: Bump Version
+#       id: bump
+#       uses: nnichols/maven-version-bump-action@v3
+#       with:
+#         github-token: ${{ secrets.CONNECT_TOKEN }}
 
-    - name: Print Version
-      run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
+#     - name: Print Version
+#       run: "echo 'New Version: ${{steps.bump.outputs.version}}'"
 
-    - name: build image
-      run: docker build -t eden4536/simple-java-maven-app:${{steps.bump.outputs.version}} --build-arg="VERSION=${{steps.bump.outputs.version}}" .
+#     - name: build image
+#       run: docker build -t eden4536/simple-java-maven-app:${{steps.bump.outputs.version}} --build-arg="VERSION=${{steps.bump.outputs.version}}" .
 
-    - name: push to dockerub
-      uses: docker/login-action@v3
-      with:
-        username: ${{ secrets.DOCKERHUB_USER }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+#     - name: push to dockerub
+#       uses: docker/login-action@v3
+#       with:
+#         username: ${{ secrets.DOCKERHUB_USER }}
+#         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: push version
-      run: docker push eden4536/simple-java-maven-app:${{steps.bump.outputs.version}}
+#     - name: push version
+#       run: docker push eden4536/simple-java-maven-app:${{steps.bump.outputs.version}}
 
-    - name: push to dockerhub
-      run: |
-        docker tag eden4536/simple-java-maven-app:${{steps.bump.outputs.version}} eden4536/simple-java-maven-app
-        docker push eden4536/simple-java-maven-app
+#     - name: push to dockerhub
+#       run: |
+#         docker tag eden4536/simple-java-maven-app:${{steps.bump.outputs.version}} eden4536/simple-java-maven-app
+#         docker push eden4536/simple-java-maven-app
 
-        #deploy: 
-        #needs: build
+#         #deploy: 
+#         #needs: build
 
 
