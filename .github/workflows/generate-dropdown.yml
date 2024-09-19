@@ -22,7 +22,7 @@ jobs:
     - name: Fetch microservices list
       id: fetch
       run: |
-        curl -o microservices.json https://raw.githubusercontent.com/your-org/microservices-config/main/microservices.json
+        curl -o microservices.json https://raw.githubusercontent.com/simple-java-maven-app/microservices-config/main/microservices.json
         cat microservices.json
 
     - name: Generate dropdown options
