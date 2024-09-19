@@ -1,0 +1,35 @@
+name: Generate Dropdown List
+
+on:
+  workflow_dispatch:
+    inputs:
+      microservice:
+        description: 'Select a microservice'
+        required: true
+        type: choice
+        options: []
+
+jobs:
+  generate-dropdown:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout configuration repository
+      uses: actions/checkout@v3
+      with:
+        repository: 'your-org/microservices-config'
+        token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Fetch microservices list
+      id: fetch
+      run: |
+        curl -o microservices.json https://raw.githubusercontent.com/your-org/microservices-config/main/microservices.json
+        cat microservices.json
+
+    - name: Generate dropdown options
+      id: generate
+      run: |
+        MICROSERVICES=$(jq -r '.eden[]' microservices.json)
+        echo "MICROSERVICES=$MICROSERVICES" >> $GITHUB_ENV
+
+    - name: Output the list
+      run: echo "Microservices: ${{ env.MICROSERVICES }}"
