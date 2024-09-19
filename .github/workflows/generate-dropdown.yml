@@ -16,7 +16,7 @@ jobs:
     - name: Checkout configuration repository
       uses: actions/checkout@v3
       with:
-        repository: 'your-org/microservices-config'
+        repository: 'simple-java-maven-app/microservices-config'
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Fetch microservices list
@@ -28,7 +28,7 @@ jobs:
     - name: Generate dropdown options
       id: generate
       run: |
-        MICROSERVICES=$(jq -r '.eden[]' microservices.json)
+        MICROSERVICES=$(jq -r '.simple-java-maven-app[]' microservices.json)
         echo "MICROSERVICES=$MICROSERVICES" >> $GITHUB_ENV
 
     - name: Output the list
