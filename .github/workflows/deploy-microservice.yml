@@ -2,24 +2,29 @@ name: Deploy Microservice
 
 on:
   workflow_dispatch:
-    inputs:
-      microservice:
-        description: 'Select a microservice'
-        required: true
-        type: choice
-        options:
-          - user
-          - cart
-          - admin
 
 jobs:
-  deploy:
+  generate-options:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    - name: Deploy selected microservice
-      run: |
-        echo "Deploying microservice: ${{ github.event.inputs.microservice }}"
-        # Add your deployment logic here
+      - name: Generate microservices list
+        id: generate_list
+        run: |
+          chmod +x ./microservices-config/generate-options.sh
+          MICRO_SERVICES=$(./microservices-config/generate-options.sh)
+          echo "MICRO_SERVICES=$MICRO_SERVICES" >> $GITHUB_ENV
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: generate-options
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy selected microservice
+        run: |
+          echo "Deploying microservice: ${{ env.MICRO_SERVICES }}"
+          # Add your deployment logic here
