@@ -1,4 +1,5 @@
 name: Deploy Microservice
+
 on:
   workflow_dispatch:
     inputs:
@@ -6,14 +7,19 @@ on:
         description: 'Select a microservice'
         required: true
         type: choice
-        options: ${{ steps.generate.outputs.MICROSERVICES }}
+        options:
+          - user
+          - cart
+          - admin
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
     - name: Deploy selected microservice
       run: |
         echo "Deploying microservice: ${{ github.event.inputs.microservice }}"
-        # Add deployment logic here
+        # Add your deployment logic here
