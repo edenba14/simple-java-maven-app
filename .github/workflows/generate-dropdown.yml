@@ -13,23 +13,29 @@ jobs:
   generate-dropdown:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout configuration repository
+    - name: Checkout microservices configuration
       uses: actions/checkout@v3
       with:
-        repository: 'simple-java-maven-app/microservices-config'
+        repository: 'your-org/microservices-config'
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Fetch microservices list
       id: fetch
       run: |
-        curl -o microservices.json https://raw.githubusercontent.com/simple-java-maven-app/microservices-config/main/microservices.json
+        curl -o microservices.json https://raw.githubusercontent.com/your-org/microservices-config/main/microservices.json
         cat microservices.json
+
+    - name: Debug JSON File
+      run: |
+        jq . microservices.json
 
     - name: Generate dropdown options
       id: generate
       run: |
-        MICROSERVICES=$(jq -r '.simple-java-maven-app[]' microservices.json)
+        MICROSERVICES=$(jq -r '.eden[]' microservices.json)
         echo "MICROSERVICES=$MICROSERVICES" >> $GITHUB_ENV
 
-    - name: Output the list
-      run: echo "Microservices:"
+    - name: Output Environment Variables
+      run: |
+        echo "MICROSERVICES: $MICROSERVICES"
+        echo "MICROSERVICES from env: ${{ env.MICROSERVICES }}"
