@@ -7,7 +7,8 @@ on:
         description: 'Select a microservice'
         required: true
         type: choice
-        options: ${{ steps.generate.outputs.MICROSERVICES }}
+        options:
+          - all
 
 jobs:
   deploy:
