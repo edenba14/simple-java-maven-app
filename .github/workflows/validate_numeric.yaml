@@ -1,0 +1,37 @@
+name: Validate Numeric Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      numeric_input1:
+        description: "Enter a number"
+        required: true
+        default: "123"
+      numeric_input2:
+        description: "Enter a number"
+        required: true
+        default: "123"
+
+jobs:
+  validate_numeric_inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Numeric Inputs
+        run: |
+          # Get input values
+          NUMERIC_INPUT1="${{ github.event.inputs.numeric_input1 }}"
+          NUMERIC_INPUT2="${{ github.event.inputs.numeric_input2 }}"
+          
+          # Validate NUMERIC_INPUT1
+          if ! [[ "$NUMERIC_INPUT1" =~ ^[0-9]+$ ]]; then
+            echo "numeric_input1 is invalid. Please enter a valid number."
+            exit 1
+          fi
+          
+          # Validate NUMERIC_INPUT2
+          if ! [[ "$NUMERIC_INPUT2" =~ ^[0-9]+$ ]]; then
+            echo "numeric_input2 is invalid. Please enter a valid number."
+            exit 1
+          fi
+
+          echo "Both numeric inputs are valid."
