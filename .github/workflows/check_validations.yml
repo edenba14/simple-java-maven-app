@@ -1,5 +1,4 @@
 name: Run Workflow with Date
-
 on:
   workflow_dispatch:
     inputs:
